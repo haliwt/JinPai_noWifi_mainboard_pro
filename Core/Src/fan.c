@@ -6,7 +6,14 @@
 
 
 
+void AI_On(void)
+{
+    FAN_CCW_RUN();
+	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);//ultrasnoic ON 
+	PLASMA_SetHigh();
+	PTC_SetHigh();
 
+}
 
 
 void FAN_CCW_RUN(void)
@@ -30,7 +37,7 @@ void Buzzer_On(void)
 	while(m--){
 		BUZZER_TOGGLE() ; 
         delay_us(400);
-        }
+       }
   
  }
 

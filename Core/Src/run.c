@@ -130,7 +130,8 @@ void Single_ReceiveCmd(uint8_t cmd)
       case 0x11: //AI turn off 
        
             run_t.gAi =1;
-             Buzzer_On();
+            Buzzer_On();
+	        
             cmd = 0xff;
 
       break;
@@ -140,7 +141,11 @@ void Single_ReceiveCmd(uint8_t cmd)
 		   run_t.gPlasma =0;
 	       run_t.gDry =0;
 		   run_t.gFan = 0;
-     	    Buzzer_On();
+		   Buzzer_On();
+		   AI_On();
+
+		   
+		   
      	    cmd=0xff;
      break;
 
@@ -300,6 +305,8 @@ void RunCommand_Order(void)
 				
 				   run_t.gFan_continueRun++;
 				   FAN_Stop();
+				   SendCmd_To_Fan(0x01);
+				   
 	           }
 	  }
 	  if(run_t.gPower_On !=0 && run_t.gFan_continueRun ==0){
@@ -324,6 +331,7 @@ void RunCommand_Order(void)
 	  
          run_t.gFan_continueRun++;
 		  FAN_Stop();
+		  SendCmd_To_Fan(0x01);
 	   }
    }
 

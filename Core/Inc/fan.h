@@ -38,6 +38,7 @@
 
 
 
+void AI_On(void);
 
 void FAN_CCW_RUN(void);
 void FAN_Stop(void);

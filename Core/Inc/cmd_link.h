@@ -14,15 +14,7 @@ void Decode_Function(void);
 
 void SendData_To_TouchKey(uint8_t hum,uint8_t temp);
 
-void SendWifiData_To_Cmd(uint8_t wdata);
-
-
-
-
-void SendWifiData_To_PanelTime(uint8_t dat1);
-void SendWifiData_To_PanelTemp(uint8_t dat1);
-void SendWifiCmd_To_Order(uint8_t odata);
-void SendData_Real_GMT(uint8_t hdata,uint8_t mdata,uint8_t sdata);
+void SendCmd_To_Fan(uint8_t odata);
 
 
 #endif 

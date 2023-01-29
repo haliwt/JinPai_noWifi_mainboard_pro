@@ -116,82 +116,13 @@ void SendData_To_TouchKey(uint8_t hum,uint8_t temp)
 
 
 }
-void SendWifiData_To_PanelTime(uint8_t dat1)
-{
-   
-	//crc=0x55;
-		outputBuf[0]='M'; //4D
-		outputBuf[1]='A'; //41
-		outputBuf[2]='T'; //44	// 'T' time
-		outputBuf[3]=dat1; //	
-		outputBuf[4]=0; // 
-		
-		//for(i=3;i<6;i++) crc ^= outputBuf[i];
-		//outputBuf[i]=crc;
-		transferSize=5;
-		if(transferSize)
-		{
-			while(transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
-			transOngoingFlag=1;
-			HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
-		}
 
 
-
-}
-
-void SendWifiData_To_PanelTemp(uint8_t dat1)
-{
-   
-	//crc=0x55;
-		outputBuf[0]='M'; //4D
-		outputBuf[1]='A'; //41
-		outputBuf[2]='P'; //44	// 'T' time
-		outputBuf[3]=dat1; //	
-		outputBuf[4]=0; // 
-		
-		//for(i=3;i<6;i++) crc ^= outputBuf[i];
-		//outputBuf[i]=crc;
-		transferSize=5;
-		if(transferSize)
-		{
-			while(transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
-			transOngoingFlag=1;
-			HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
-		}
-
-
-
-}
-
-
-void SendWifiData_To_Cmd(uint8_t wdata)
-{
-  
-	//crc=0x55;
-			outputBuf[0]='M'; //4D
-			outputBuf[1]='A'; //41
-			outputBuf[2]='W'; //44	// wifi ->infomation link wifi 
-			outputBuf[3]=0xAA; //	
-			outputBuf[4]=wdata; //
-			//for(i=3;i<6;i++) crc ^= outputBuf[i];
-			//outputBuf[i]=crc;
-			transferSize=5;
-			if(transferSize)
-			{
-				while(transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
-				transOngoingFlag=1;
-				HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
-			}
-
-
-
-}
 /***************************************************************
  * 
  * Function: panel power on and special function
 ***************************************************************/
-void SendWifiCmd_To_Order(uint8_t odata)
+void SendCmd_To_Fan(uint8_t odata)
 {
   
 	//crc=0x55;
@@ -199,10 +130,9 @@ void SendWifiCmd_To_Order(uint8_t odata)
 			outputBuf[1]='A'; //41
 			outputBuf[2]='C'; //44	// 'C' ->control 
 			outputBuf[3]=odata; //	
-			outputBuf[4]=0x0; //
 			//for(i=3;i<6;i++) crc ^= outputBuf[i];
 			//outputBuf[i]=crc;
-			transferSize=5;
+			transferSize=4;
 			if(transferSize)
 			{
 				while(transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
@@ -214,27 +144,7 @@ void SendWifiCmd_To_Order(uint8_t odata)
 
 }
 
-void SendData_Real_GMT(uint8_t hdata,uint8_t mdata,uint8_t sdata)
-{
-   
 
-	outputBuf[0]='M'; //4D
-	outputBuf[1]='A'; //41
-	outputBuf[2]='B'; //44	// 'C' ->control 
-	outputBuf[3]=hdata; //	
-	outputBuf[4]=mdata; //
-	outputBuf[5] =sdata;
-	//for(i=3;i<6;i++) crc ^= outputBuf[i];
-	//outputBuf[i]=crc;
-	transferSize=6;
-	if(transferSize)
-	{
-		while(transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
-		transOngoingFlag=1;
-		HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
-	}
-
-}
 
 /********************************************************************************
 **
