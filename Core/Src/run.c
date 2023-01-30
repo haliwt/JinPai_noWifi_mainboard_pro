@@ -149,7 +149,7 @@ void Single_ReceiveCmd(uint8_t cmd)
      	    cmd=0xff;
      break;
 
-     //rat_control
+     //Function
      case 0x08: //Fan turn on
        
 		Buzzer_On();
@@ -162,12 +162,15 @@ void Single_ReceiveCmd(uint8_t cmd)
        
         Buzzer_On();
 		run_t.gFan=1; 
+	    run_t.gDry =1;
+		 	
+	    Dry_Function(1) ;//PTC turn off
 		cmd=0xff;
       
       break;
 
      //dry key
-     case 0x02:
+     case 0x02: //PTC turn on
         
              Buzzer_On();
 			 run_t.gDry = 0;
@@ -177,7 +180,7 @@ void Single_ReceiveCmd(uint8_t cmd)
 
 	break;
 
-     case 0x12:
+     case 0x12: //PTC turn off
      
               
              Buzzer_On();
