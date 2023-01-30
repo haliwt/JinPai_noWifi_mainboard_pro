@@ -246,6 +246,28 @@ void Single_ReceiveCmd(uint8_t cmd)
          cmd = 0xff;
 			      
 	 break;
+     
+     case 0x91:  //turn off PTC "heat"
+         run_t.gDry =1;
+		 Dry_Function(1) ;//Display_Function_OnOff();
+		    
+            if(run_t.gPlasma ==1){ //plasma turn off flag
+                 run_t.gFan_counter =0;
+				 run_t.gFan_continueRun =1;
+
+             }
+		   
+        cmd=0xff; 
+         
+     break;
+     
+     case 0x90: //turn on PTC heat
+          run_t.gDry = 0;
+          run_t.gFan_continueRun =0;
+		
+		   Dry_Function(0);
+           cmd=0xff; 
+     break;
 
      default:
          
