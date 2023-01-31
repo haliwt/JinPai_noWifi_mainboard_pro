@@ -92,14 +92,12 @@ void UV_Function(uint8_t sel)
 
 void Dry_Function(uint8_t sel)
 {
-   if(sel ==0){
-
-  
-		FAN_CCW_RUN();
+   if(sel ==1){  //turn on 
+        FAN_CCW_RUN();
 		PTC_SetHigh();
 
    }
-   else{
+   else{ //turn off
 
        PTC_SetLow();
 

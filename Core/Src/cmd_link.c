@@ -63,18 +63,15 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		HAL_UART_Receive_IT(&huart1,inputBuf,1);//UART receive data interrupt 1 byte
 		
 	}
-    
-  
- }
-    
-/********************************************
+}
+/**********************************************************
 	*
 	*Function Name:void Decode_Function(void)
     *Function: receive dsipay panel of order
     *Input Ref:NO
     *Return Ref:NO
 
-*********************************************/ 
+*********************************************************/ 
 void Decode_Function(void)
 {
    if(run_t.decodeFlag==1){
@@ -95,7 +92,6 @@ void Decode_Function(void)
 *******************************************************************************/
 void SendData_To_TouchKey(uint8_t hum,uint8_t temp)
 {
-
 	//crc=0x55;
 	outputBuf[0]='M'; //4D
 	outputBuf[1]='A'; //41
@@ -112,40 +108,30 @@ void SendData_To_TouchKey(uint8_t hum,uint8_t temp)
 		transOngoingFlag=1;
 		HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
 	}
-
-
-
 }
-
-
 /***************************************************************
  * 
  * Function: panel power on and special function
+ * 
 ***************************************************************/
 void SendCmd_To_Fan(uint8_t odata)
 {
   
 	//crc=0x55;
-			outputBuf[0]='M'; //4D
-			outputBuf[1]='A'; //41
-			outputBuf[2]='C'; //44	// 'C' ->control 
-			outputBuf[3]=odata; //	
-			//for(i=3;i<6;i++) crc ^= outputBuf[i];
-			//outputBuf[i]=crc;
-			transferSize=4;
-			if(transferSize)
-			{
-				while(transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
-				transOngoingFlag=1;
-				HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
-			}
-
-
-
+	outputBuf[0]='M'; //4D
+	outputBuf[1]='A'; //41
+	outputBuf[2]='C'; //44	// 'C' ->control 
+	outputBuf[3]=odata; //	
+	//for(i=3;i<6;i++) crc ^= outputBuf[i];
+	//outputBuf[i]=crc;
+	transferSize=4;
+	if(transferSize)
+	{
+		while(transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
+		transOngoingFlag=1;
+		HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
+	}
 }
-
-
-
 /********************************************************************************
 **
 *Function Name:void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
@@ -160,9 +146,6 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 	{
 		transOngoingFlag=0; //UART Transmit interrupt flag =0 ,RUN
 	}
-
-	
-
 }
 
 

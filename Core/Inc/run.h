@@ -40,13 +40,10 @@ typedef struct _RUN_T{
     uint8_t gmt_time_flag;
 	uint8_t sed_GMT_times;
 
-      
-
-     
-      uint8_t  gPlasma;
-      uint8_t  gDry;
-      uint8_t  gAi;
-	  uint8_t  gFan;
+    uint8_t  gPlasma;
+    uint8_t  gDry;
+    uint8_t  gAi;
+	uint8_t  gFan;
 
 	uint8_t kill_key;
 	uint8_t kill_key_off;
@@ -57,25 +54,11 @@ typedef struct _RUN_T{
 	uint8_t rat_key;
 	uint8_t rat_key_off;
 	
-
-
 	uint8_t  globe_sub_flag;
 	uint8_t set_temperature_on;
 	uint8_t set_temperature_off;
-
-
-
 	uint8_t gTimer_60s;
-
 	uint8_t gFan_counter;
-
-
-   
-    
-    
-	
-
-	
 }RUN_T;
 
 //#define CProcessInit(me_) ((me_)->cmdCtr__ =0,(me_)->state__ = IDLE)

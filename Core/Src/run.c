@@ -59,49 +59,29 @@ void Decode_RunCmd(void)
   switch(cmdType_1){
   
       case 'P': //power 
-        
-        
-       if(cmdType_2 == 0x00){ //power off
-          
-		 
-		  SetPowerOff_ForDoing();
+        if(cmdType_2 == 0x00){ //power off
+          SetPowerOff_ForDoing();
 		  run_t.gPower_On=0;
 		  run_t.SingleMode = 0;
-	
-		   
-       
-       } 
+		} 
        else if(cmdType_2 ==1){ //power on
-       
-
-	     
-			SetPowerOn_ForDoing();
-	        run_t.gPower_On=1;
-		    run_t.SingleMode = 1;
-	
-         
-
-	   }       
+          SetPowerOn_ForDoing();
+          run_t.gPower_On=1;
+          run_t.SingleMode = 1;
+	    }       
       
           
       break;
       
-      case 'A': //wifi  control function ->wifi ->indicate Fun
+      case 'C': //wifi  control function ->wifi ->indicate Fun
         
         if(run_t.gPower_On==1){
-			
-		
-           Single_ReceiveCmd(cmdType_2);
-                
-            
-			
+			Single_ReceiveCmd(cmdType_2);
         }
 
       break;
 
-	 
-
-	  case 'Z' :
+    case 'Z' :
 	    if(run_t.gPower_On==1){
 
 		    if(cmdType_2== 'Z'){//turn off AI
@@ -127,154 +107,148 @@ void Single_ReceiveCmd(uint8_t cmd)
     if(run_t.gPower_On==1){
 	switch(cmd){
 
-      case 0x11: //AI turn off 
+    //   case 0x11: //AI turn off 
        
-            run_t.gAi =1;
-            Buzzer_On();
+    //         run_t.gAi =1;
+    //         Buzzer_On();
 	        
-            cmd = 0xff;
+    //         cmd = 0xff;
 
-      break;
+    //   break;
 
-     case 0x01://AI turn on
-     	   run_t.gAi = 0;
-		   run_t.gPlasma =0;
-	       run_t.gDry =0;
-		   run_t.gFan = 0;
-		   Buzzer_On();
-		   AI_On();
+    //  case 0x01://AI turn on
+    //  	   run_t.gAi = 0;
+	// 	   run_t.gPlasma =0;
+	//        run_t.gDry =0;
+	// 	   run_t.gFan = 0;
+	// 	   Buzzer_On();
+	// 	   AI_On();
 
 		   
 		   
-     	    cmd=0xff;
-     break;
+    //  	    cmd=0xff;
+    //  break;
 
      //Function
-     case 0x08: //Fan turn on
+    //  case 0x08: //Fan turn on
        
-		Buzzer_On();
-		run_t.gFan=0;
-	    run_t.gFan_continueRun =0;
-        cmd =0xff;
-     break;
+	// 	Buzzer_On();
+	// 	run_t.gFan=0;
+	//     run_t.gFan_continueRun =0;
+    //     cmd =0xff;
+    //  break;
 
-     case 0x18: //fan turn off
+    //  case 0x18: //fan turn off
        
-        Buzzer_On();
-		run_t.gFan=1; 
-	    run_t.gDry =1;
+    //     Buzzer_On();
+	// 	run_t.gFan=1; 
+	//     run_t.gDry =1;
 		 	
-	    Dry_Function(1) ;//PTC turn off
-		cmd=0xff;
+	//     Dry_Function(1) ;//PTC turn off
+	// 	cmd=0xff;
       
-      break;
+    //   break;
 
      //dry key
-     case 0x02: //PTC turn on
+     case 0x12: //PTC turn on
         
              Buzzer_On();
-			 run_t.gDry = 0;
+			 run_t.gDry = 1;
              run_t.gFan_continueRun =0;
 		
-			 Dry_Function(0);
+			 Dry_Function(1);
 
 	break;
 
-     case 0x12: //PTC turn off
-     
-              
-             Buzzer_On();
-			 run_t.gDry =1;
-		 	
-	
-		    Dry_Function(1) ;//Display_Function_OnOff();
-		    
-            if(run_t.gPlasma ==1){ //plasma turn off flag
-                 run_t.gFan_counter =0;
-				 run_t.gFan_continueRun =1;
+     case 0x02: //PTC turn off
+		Buzzer_On();
+		run_t.gDry =0;
+		Dry_Function(0) ;//Display_Function_OnOff();
+        if(run_t.gPlasma ==1){ //plasma turn off flag
+			run_t.gFan_counter =0;
+			run_t.gFan_continueRun =1;
 
-             }
-		   
-        cmd=0xff; 
+		}
+
+cmd=0xff; 
        
      break;
 
      //kill key
 
-     case 0x04:
+    //  case 0x04:
        
-       Buzzer_On();
-	   run_t.gPlasma =0;
-	   run_t.gFan_continueRun =0;
-	   UV_Function(0); //turn on
-	   Rat_Control_Function(0); //drive rat turn on
-	    cmd = 0xff; 
+    //    Buzzer_On();
+	//    run_t.gPlasma =0;
+	//    run_t.gFan_continueRun =0;
+	//    UV_Function(0); //turn on
+	//    Rat_Control_Function(0); //drive rat turn on
+	//     cmd = 0xff; 
 		   
-       break;
+    //    break;
 
-     case 0x14:
+    //  case 0x14:
         
-     	    Buzzer_On();
+    //  	    Buzzer_On();
        
-            run_t.gPlasma =1; //turn off plasma 
+    //         run_t.gPlasma =1; //turn off plasma 
 		
-           UV_Function(1); //turn off kill function
-           Rat_Control_Function(1); //drive rat turn off
-			 if( run_t.gDry ==1){
+    //        UV_Function(1); //turn off kill function
+    //        Rat_Control_Function(1); //drive rat turn off
+	// 		 if( run_t.gDry ==1){
 			 
-				  run_t.gFan_counter =0;
-				 run_t.gFan_continueRun =1;
-			 }
+	// 			  run_t.gFan_counter =0;
+	// 			 run_t.gFan_continueRun =1;
+	// 		 }
     
-          cmd = 0xff;
+    //       cmd = 0xff;
         
       
-     break;
+    //  break;
 
-     case 0x88:
+    //  case 0x88:
 	            
 
-			    Buzzer_On(); 
+	// 		    Buzzer_On(); 
 
 	 
-          cmd =0xff;
+    //       cmd =0xff;
 
 
-	 break;
+	//  break;
 
-	 case 0x87:
+	//  case 0x87:
 			  
 
-               Buzzer_On(); 
-         cmd = 0xff;
+    //            Buzzer_On(); 
+    //      cmd = 0xff;
 			      
-	 break;
+	//  break;
      
-     case 0x91:  //turn off PTC "heat"
-         run_t.gDry =1;
-		 Dry_Function(1) ;//Display_Function_OnOff();
+    //  case 0x91:  //turn off PTC "heat"
+    //      run_t.gDry =1;
+	// 	 Dry_Function(1) ;//Display_Function_OnOff();
 		    
-            if(run_t.gPlasma ==1){ //plasma turn off flag
-                 run_t.gFan_counter =0;
-				 run_t.gFan_continueRun =1;
+    //         if(run_t.gPlasma ==1){ //plasma turn off flag
+    //              run_t.gFan_counter =0;
+	// 			 run_t.gFan_continueRun =1;
 
-             }
+    //          }
 		   
-        cmd=0xff; 
+    //     cmd=0xff; 
          
-     break;
+    //  break;
      
-     case 0x90: //turn on PTC heat
-          run_t.gDry = 0;
-          run_t.gFan_continueRun =0;
+    //  case 0x90: //turn on PTC heat
+    //       run_t.gDry = 0;
+    //       run_t.gFan_continueRun =0;
 		
-		   Dry_Function(0);
-           cmd=0xff; 
+	// 	   Dry_Function(0);
+    //        cmd=0xff; 
      break;
 
      default:
          
-         run_t.Single_cmd = 0;
      break;
 
 
